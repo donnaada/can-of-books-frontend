@@ -52,13 +52,14 @@ class BestBooks extends React.Component {
     return (
       <Container className='my-5'>
 
-        <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
+        <h2 className='text-center my-3'><span className="border-bottom pb-2 ">An Essential Lifelong Learning &amp; Formation Shelf</span></h2>
+
 
         <main>
           {
             this.state.books.length > 0 &&
             <>
-              <Carousel>
+              <Carousel className='mt-5'>
                 {this.state.books.map(book => {
                   return (
                     <Carousel.Item key={this.props.id}>
@@ -87,48 +88,3 @@ class BestBooks extends React.Component {
 }
 
 export default BestBooks;
-
-
-// import React, { Component, useState } from 'react';
-// import Carousel from 'react-bootstrap/Carousel';
-// import CarouselImg from './book-img.jpg'
-
-
-// class ControlledCarousel extends Component {
-
-//   constructor(props) {
-//     super(props);
-//     this.state({
-//       index: 0,
-//     })
-//   }
-
-//   // const [index, setIndex] = useState(0);
-//   handleSelect = (selectedIndex, e) => {
-
-//     this.setState({
-//       index: selectedIndex
-//     })
-
-//   };
-//   render() {
-
-//     return (
-//       <Carousel activeIndex={index} onSelect={handleSelect}>
-//         <Carousel.Item>
-//           <img
-//             className="d-block w-100"
-//             src={CarouselImg}
-//             alt="Image of open book"
-//           />
-//           <Carousel.Caption>
-//             <h3>First slide label</h3>
-//             <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-//           </Carousel.Caption>
-//         </Carousel.Item>
-//       </Carousel>
-//     );
-//   }
-// }
-
-// export default ControlledCarousel;
