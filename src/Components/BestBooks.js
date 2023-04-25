@@ -3,7 +3,7 @@ import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import ControlledCarousel from './BestBooksCarousel'
 import CarouselImg from '../book-img.jpg'
-import { Container } from 'react-bootstrap';
+import { Container, Form, Button, Modal } from 'react-bootstrap';
 
 
 
@@ -14,11 +14,11 @@ class BestBooks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: []
+      books: [],
+      showModal: false
     }
   }
 
-  /* TODO: Make a GET request to your API to fetch all the books from the database  */
 
   getBooks = async (req, res, next) => {
     try {
@@ -45,15 +45,115 @@ class BestBooks extends React.Component {
     this.getBooks()
   }
 
+  handleSubmit = (e) =>{
+    e.preventDefault();
+
+    let bookObj = {
+      title: e.target.bookTitle.value,
+      description: e.target.bookDesc.value,
+      status: e.target.bookStatus.value,
+    }
+
+    console.log(`bookObj`);
+    this.postBook(bookObj);
+  }
+
+  postBook = async (bookObj) =>{
+    try {
+      let url = `${SERVER}/books`;
+
+      let postBook = await axios.post(url, bookObj);
+
+      this.setState({
+        books: [...this.state.books, postBook.data]
+      })
+      // this.getBooks(); //Same concept as line 66-68
+            
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+  deleteBook = async (bookID) =>{
+    try {
+      let url = `${SERVER}/books/${bookID}`;
+      console.log('url in delete>>>', url)
+      
+      await axios.delete(url);
+
+      let updatedBooks = this.state.books.filter(book => book._id !== bookID);
+
+      this.setState({
+        books: updatedBooks 
+      })
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  handleModalShow = () =>{
+    this.setState({
+      showModal: true
+    })
+  }
+
+  handleModalClose = () =>{
+    this.setState({
+      showModal: false
+    })
+  }
+
+
+
+
+
   render() {
 
-    /* TODO: render all the books in a Carousel */
 
     return (
       <Container className='my-5'>
+        <Button onClick={()=>this.handleModalShow()}>Add New Book + </Button>
 
         <h2 className='text-center my-3'><span className="border-bottom pb-2 ">An Essential Lifelong Learning &amp; Formation Shelf</span></h2>
 
+        <Modal
+      // {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      show={this.state.showModal}
+      onHide={()=>this.handleModalClose()}
+    >
+      <Form onSubmit={this.handleSubmit}>
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Add a Book
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form.Group className="mb-3" controlId="bookTitle">
+          <Form.Label>Title</Form.Label>
+          <Form.Control type="name" placeholder="Enter Book Title" />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="bookDesc">
+          <Form.Label>Description</Form.Label>
+          <Form.Control type="name" placeholder="Enter Book Description" />
+        </Form.Group>
+        
+        <Form.Group className="mb-3" controlId="bookStatus">
+        <Form.Label>Status</Form.Label>
+          <Form.Control type="name" Placeholder="Book Status" />
+        </Form.Group>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+        <Button onClick={()=>this.handleModalClose()}>Close</Button>
+      </Modal.Footer>
+      </Form>
+    </Modal>
 
         <main>
           {
@@ -73,6 +173,7 @@ class BestBooks extends React.Component {
                         title={book.title}
                         description={book.description}
                         status={book.status}
+                        deleteBook={this.deleteBook}
                       />
                     </Carousel.Item>
 
@@ -81,6 +182,8 @@ class BestBooks extends React.Component {
               </Carousel>
             </>
           }
+
+
         </main >
       </Container>
     )
