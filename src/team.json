@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Michael \"Ike\" Steoger",
+    "imageSrc": "https://avatars.githubusercontent.com/u/125151377?v=4",
+    "title": "Future Full-Stack Software Developer",
+    "description": "Tech lover who finally is making the jump into the field & learning everything that fits into my brain!",
+    "social": [
+      {
+        "platform": "github",
+        "link": "https://github.com/IkeSteoger"
+      },
+      {
+        "platform": "linkedin",
+        "link": "https://www.linkedin.com/in/ikesteoger/"
+      }
+    ]
+  },
+  {
+    "name": "Donna Marie Ada",
+    "imageSrc": "https://avatars.githubusercontent.com/u/125130284?v=4",
+    "title": "Aspiring Full-Stack Software Developer",
+    "description": "Aspiring Dev with a passion for learning to create beautiful and functional websites and web applications.",
+    "social": [
+      {
+        "platform": "github",
+        "link": "https://github.com/donnaada"
+      },
+      {
+        "platform": "linkedin",
+        "link": "https://www.linkedin.com/in/donnaada"
+      }
+    ]
+  }
+]
