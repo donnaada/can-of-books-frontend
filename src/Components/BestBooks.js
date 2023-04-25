@@ -104,10 +104,6 @@ class BestBooks extends React.Component {
     })
   }
 
-
-
-
-
   render() {
 
 
@@ -147,7 +143,7 @@ class BestBooks extends React.Component {
         </Form.Group>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" onClick={()=>this.handleModalClose()}>
           Submit
         </Button>
         <Button onClick={()=>this.handleModalClose()}>Close</Button>
