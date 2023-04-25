@@ -2,8 +2,9 @@ import axios from 'axios';
 import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import ControlledCarousel from './BestBooksCarousel'
+import BookFormModal from './BookFormModal';
 import CarouselImg from '../book-img.jpg'
-import { Container, Form, Button, Modal } from 'react-bootstrap';
+import { Container, Button } from 'react-bootstrap';
 
 
 
@@ -86,6 +87,7 @@ class BestBooks extends React.Component {
       this.setState({
         books: updatedBooks 
       })
+
       
     } catch (error) {
       console.log(error)
@@ -113,43 +115,11 @@ class BestBooks extends React.Component {
 
         <h2 className='text-center my-3'><span className="border-bottom pb-2 ">An Essential Lifelong Learning &amp; Formation Shelf</span></h2>
 
-        <Modal
-      // {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-      show={this.state.showModal}
-      onHide={()=>this.handleModalClose()}
-    >
-      <Form onSubmit={this.handleSubmit}>
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Add a Book
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form.Group className="mb-3" controlId="bookTitle">
-          <Form.Label>Title</Form.Label>
-          <Form.Control type="name" placeholder="Enter Book Title" />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="bookDesc">
-          <Form.Label>Description</Form.Label>
-          <Form.Control type="name" placeholder="Enter Book Description" />
-        </Form.Group>
-        
-        <Form.Group className="mb-3" controlId="bookStatus">
-        <Form.Label>Status</Form.Label>
-          <Form.Control type="name" Placeholder="Book Status" />
-        </Form.Group>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="primary" type="submit" onClick={()=>this.handleModalClose()}>
-          Submit
-        </Button>
-        <Button onClick={()=>this.handleModalClose()}>Close</Button>
-      </Modal.Footer>
-      </Form>
-    </Modal>
+        <BookFormModal
+          showModal={this.state.showModal}
+          handleModalClose={()=>this.handleModalClose()}
+          handleSubmit={this.handleSubmit}
+        />
 
         <main>
           {
