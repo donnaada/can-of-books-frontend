@@ -3,7 +3,7 @@ import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import ControlledCarousel from './BestBooksCarousel'
 import CarouselImg from '../book-img.jpg'
-import { Container, Form, Button } from 'react-bootstrap';
+import { Container, Form, Button, Modal } from 'react-bootstrap';
 
 
 
@@ -14,7 +14,8 @@ class BestBooks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: []
+      books: [],
+      showModal: false
     }
   }
 
@@ -50,7 +51,7 @@ class BestBooks extends React.Component {
     let bookObj = {
       title: e.target.bookTitle.value,
       description: e.target.bookDesc.value,
-      status: e.target.bookStatus.checked,
+      status: e.target.bookStatus.value,
     }
 
     console.log(`bookObj`);
@@ -91,6 +92,20 @@ class BestBooks extends React.Component {
     }
   }
 
+  handleModalShow = () =>{
+    this.setState({
+      showModal: true
+    })
+  }
+
+  handleModalClose = () =>{
+    this.setState({
+      showModal: false
+    })
+  }
+
+
+
 
 
   render() {
@@ -98,9 +113,47 @@ class BestBooks extends React.Component {
 
     return (
       <Container className='my-5'>
+        <Button onClick={()=>this.handleModalShow()}>Add New Book + </Button>
 
         <h2 className='text-center my-3'><span className="border-bottom pb-2 ">An Essential Lifelong Learning &amp; Formation Shelf</span></h2>
 
+        <Modal
+      // {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      show={this.state.showModal}
+      onHide={()=>this.handleModalClose()}
+    >
+      <Form onSubmit={this.handleSubmit}>
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Add a Book
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form.Group className="mb-3" controlId="bookTitle">
+          <Form.Label>Title</Form.Label>
+          <Form.Control type="name" placeholder="Enter Book Title" />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="bookDesc">
+          <Form.Label>Description</Form.Label>
+          <Form.Control type="name" placeholder="Enter Book Description" />
+        </Form.Group>
+        
+        <Form.Group className="mb-3" controlId="bookStatus">
+        <Form.Label>Status</Form.Label>
+          <Form.Control type="name" Placeholder="Book Status" />
+        </Form.Group>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+        <Button onClick={()=>this.handleModalClose()}>Close</Button>
+      </Modal.Footer>
+      </Form>
+    </Modal>
 
         <main>
           {
@@ -130,23 +183,7 @@ class BestBooks extends React.Component {
             </>
           }
 
-      <Form onSubmit={this.handleSubmit}>
-        <Form.Group className="mb-3" controlId="bookTitle">
-          <Form.Label>Title</Form.Label>
-          <Form.Control type="name" placeholder="Enter Book Title" />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="bookDesc">
-          <Form.Label>description</Form.Label>
-          <Form.Control type="name" placeholder="Enter Book Description" />
-        </Form.Group>
-        
-        <Form.Group className="mb-3" controlId="bookStatus">
-          <Form.Check type="checkbox" label="Not Available" />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
+
         </main >
       </Container>
     )
