@@ -2,6 +2,7 @@
 
 **Author**: Ike Steoger & Donna Ada
 
+**Version**: 1.2.0 - Add New Book Modal and display if Database doesnt contain any books.
 **Version**: 1.0.0 - Repo Setup and Front end Connected to Backend API
 
 ## Overview
@@ -18,9 +19,16 @@ This application uses `Axios`, `React`, `Bootstrap`, `JSON`
 
 ## Change Log
 
+4-25-2023 - Create modal to add new books to DB, added option to delete book, and created a new display showing if there are no books currently in "shelf"
+
 4-24-2023 - App UI displays Carousel with data from Backend API. About us page render developer names based on content in team.json file.
 
 ## Estimates
+>Name of feature: Create/Delete (Book Component)
+>>Estimate of time needed to complete: 2 hours  
+>>Start time: 5am (ChST)  
+>>Finish time: 6am  
+>>Actual time needed to complete: 1 hours  
 
 >Name of feature: Book Component  
 >>Estimate of time needed to complete: 4 hours  

@@ -1,10 +1,13 @@
 import axios from 'axios';
 import React from 'react';
-import Carousel from 'react-bootstrap/Carousel';
-import ControlledCarousel from './BestBooksCarousel'
+// import Carousel from 'react-bootstrap/Carousel';
+// import ControlledCarousel from './BestBooksCarousel'
 import BookFormModal from './BookFormModal';
 import CarouselImg from '../book-img.jpg'
+import ShelfImg from '../bookshelf.jpg'
 import { Container, Button } from 'react-bootstrap';
+import NoBooks from './NoBooks';
+import HasBooks from './HasBooks';
 
 
 
@@ -46,7 +49,7 @@ class BestBooks extends React.Component {
     this.getBooks()
   }
 
-  handleSubmit = (e) =>{
+  handleSubmit = (e) => {
     e.preventDefault();
 
     let bookObj = {
@@ -59,7 +62,7 @@ class BestBooks extends React.Component {
     this.postBook(bookObj);
   }
 
-  postBook = async (bookObj) =>{
+  postBook = async (bookObj) => {
     try {
       let url = `${SERVER}/books`;
 
@@ -69,38 +72,38 @@ class BestBooks extends React.Component {
         books: [...this.state.books, postBook.data]
       })
       // this.getBooks(); //Same concept as line 66-68
-            
+
     } catch (error) {
       console.log(error.message)
     }
   }
 
-  deleteBook = async (bookID) =>{
+  deleteBook = async (bookID) => {
     try {
       let url = `${SERVER}/books/${bookID}`;
       console.log('url in delete>>>', url)
-      
+
       await axios.delete(url);
 
       let updatedBooks = this.state.books.filter(book => book._id !== bookID);
 
       this.setState({
-        books: updatedBooks 
+        books: updatedBooks
       })
 
-      
+
     } catch (error) {
       console.log(error)
     }
   }
 
-  handleModalShow = () =>{
+  handleModalShow = () => {
     this.setState({
       showModal: true
     })
   }
 
-  handleModalClose = () =>{
+  handleModalClose = () => {
     this.setState({
       showModal: false
     })
@@ -111,45 +114,34 @@ class BestBooks extends React.Component {
 
     return (
       <Container className='my-5'>
-        <Button onClick={()=>this.handleModalShow()}>Add New Book + </Button>
+        <Button onClick={() => this.handleModalShow()}>Add New Book + </Button>
 
         <h2 className='text-center my-3'><span className="border-bottom pb-2 ">An Essential Lifelong Learning &amp; Formation Shelf</span></h2>
 
         <BookFormModal
           showModal={this.state.showModal}
-          handleModalClose={()=>this.handleModalClose()}
+          handleModalClose={() => this.handleModalClose()}
           handleSubmit={this.handleSubmit}
         />
 
         <main>
-          {
-            this.state.books.length > 0 &&
-            <>
-              <Carousel className='mt-5'>
-                {this.state.books.map(book => {
-                  return (
-                    <Carousel.Item key={this.props.id}>
-                      <img
-                        className="d-block w-100"
-                        src={CarouselImg}
-                        alt="open book"
-                      />
-                      <ControlledCarousel
-                        id={book._id}
-                        title={book.title}
-                        description={book.description}
-                        status={book.status}
-                        deleteBook={this.deleteBook}
-                      />
-                    </Carousel.Item>
+          {this.state.books.length > 0
+            ? <HasBooks
+              bookState={this.state.books}
+              id={this.props.id}
+              img={CarouselImg}
+              deleteBook={this.deleteBook}
+            />
+            : <NoBooks
+              img={ShelfImg}
+              key={999999}
+              title={'No books found.'}
+              description={'Use the Add New Book Button to start adding books to your shelf.'} />
 
-                  )
-                })}
-              </Carousel>
-            </>
+
+
+
           }
-
-
         </main >
       </Container>
     )
