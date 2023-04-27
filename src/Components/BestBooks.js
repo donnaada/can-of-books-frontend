@@ -97,6 +97,25 @@ class BestBooks extends React.Component {
     }
   }
 
+  updateBook = async (bookToUpdate) => {
+    try {
+      let url = `${SERVER}/books/${bookToUpdate._id}`
+      let updatedBook = await axios.put(url, bookToUpdate)
+      let updatedBookArray = this.state.books.map(existingBook => {
+        return existingBook._id === bookToUpdate._id
+          ? updatedBook.data
+          : existingBook
+      });
+      this.setState({
+        books: updatedBookArray
+      })
+
+
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
   handleModalShow = () => {
     this.setState({
       showModal: true
@@ -108,6 +127,8 @@ class BestBooks extends React.Component {
       showModal: false
     })
   }
+
+
 
   render() {
 
@@ -131,16 +152,17 @@ class BestBooks extends React.Component {
               id={this.props.id}
               img={CarouselImg}
               deleteBook={this.deleteBook}
+              showModal={this.state.showModal}
+              handleModalClose={this.handleModalClose}
+              handleModalShow={this.handleModalShow}
+              updateBook={this.updateBook}
+
             />
             : <NoBooks
               img={ShelfImg}
               key={999999}
               title={'No books found.'}
               description={'Use the Add New Book Button to start adding books to your shelf.'} />
-
-
-
-
           }
         </main >
       </Container>
