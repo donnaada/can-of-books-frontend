@@ -9,7 +9,7 @@ class NoBooks extends Component {
         return (
             <Carousel className='mt-5' indicators={false}>
                 return (
-                <Carousel.Item key={this.props.id}>
+                <Carousel.Item key={this.props.key}>
                     <img
                         className="d-block w-100"
                         src={this.props.img}

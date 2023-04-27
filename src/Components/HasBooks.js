@@ -13,18 +13,25 @@ class HasBooks extends Component {
                 <Carousel className='mt-5'>
                     {this.props.bookState.map(book => {
                         return (
-                            <Carousel.Item key={this.props.id}>
+                            <Carousel.Item key={book.id}>
                                 <img
                                     className="d-block w-100"
                                     src={this.props.img}
                                     alt="open book"
                                 />
                                 <ControlledCarousel
+                                    book={this.props.bookState}
+                                    vId={book.__v}
                                     id={book._id}
                                     title={book.title}
                                     description={book.description}
                                     status={book.status}
                                     deleteBook={this.props.deleteBook}
+                                    showModal={this.props.showModal}
+                                    handleModalClose={this.handleModalClose}
+                                    updateBook={this.props.updateBook}
+                                    handleModalShow={this.props.handleModalShow}
+
                                 />
                             </Carousel.Item>
 
